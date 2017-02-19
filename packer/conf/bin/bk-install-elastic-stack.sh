@@ -68,8 +68,8 @@ fi
 
 export COMPOSE_FILE=/var/lib/buildkite-agent/docker-compose.yml
 
-docker-compose up --verbose -d
-docker-compose scale "agent=$BUILDKITE_AGENTS_PER_INSTANCE"
+docker-compose --verbose up -d
+docker-compose --verbose scale "agent=$BUILDKITE_AGENTS_PER_INSTANCE"
 
 # my kingdom for a decent init system
 start terminationd || true
