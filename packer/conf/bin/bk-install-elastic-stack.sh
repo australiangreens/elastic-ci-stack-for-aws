@@ -9,16 +9,16 @@ on_error() {
 	local exitCode="$?"
 	local errorLine="$1"
 
+	aws autoscaling set-instance-health \
+		--instance-id "$INSTANCE_ID" \
+		--health-status Unhealthy
+
 	/opt/aws/bin/cfn-signal \
 		--region "$AWS_REGION" \
 		--stack "$BUILDKITE_STACK_NAME" \
 		--reason "Error on line $errorLine: $(tail -n 1 /var/log/elastic-stack.log)" \
 		--resource "AgentAutoScaleGroup" \
 		--exit-code "$exitCode"
-
-	aws autoscaling set-instance-health \
-		--instance-id "$INSTANCE_ID" \
-		--health-status Unhealthy
 }
 
 trap 'on_error $LINENO' ERR
