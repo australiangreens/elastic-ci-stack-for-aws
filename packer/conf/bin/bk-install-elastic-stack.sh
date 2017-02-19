@@ -66,8 +66,10 @@ if [[ -n "${BUILDKITE_ELASTIC_BOOTSTRAP_SCRIPT}" ]] ; then
 	rm /tmp/elastic_bootstrap
 fi
 
-docker-compose -f /var/lib/buildkite-agent/docker-compose.yml up -d
-docker-compose -f /var/lib/buildkite-agent/docker-compose.yml scale "agent=$BUILDKITE_AGENTS_PER_INSTANCE"
+export COMPOSE_FILE=/var/lib/buildkite-agent/docker-compose.yml
+
+docker-compose up --verbose -d
+docker-compose scale "agent=$BUILDKITE_AGENTS_PER_INSTANCE"
 
 # my kingdom for a decent init system
 start terminationd || true
