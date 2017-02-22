@@ -36,6 +36,16 @@ steps:
       stack: $stack_name
       queue: $queue_name
 
+  - command: ".buildkite/steps/loadtest.sh"
+    name: "Run load test %n"
+    concurrency: 20
+    timeout_in_minutes: 5
+    env:
+      BUILDKITE_SECRETS_KEY: $BUILDKITE_SECRETS_KEY
+    agents:
+      stack: $stack_name
+      queue: $queue_name
+
   - wait
 
   - command: .buildkite/steps/publish.sh
