@@ -38,7 +38,7 @@ steps:
 
   - command: ".buildkite/steps/loadtest.sh"
     name: "Run load test %n"
-    concurrency: 20
+    parallelism: 50
     timeout_in_minutes: 5
     env:
       BUILDKITE_SECRETS_KEY: $BUILDKITE_SECRETS_KEY
